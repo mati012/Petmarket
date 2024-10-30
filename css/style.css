@@ -180,6 +180,26 @@ section img:hover{
   display: none;
 
 }
+.login{
+  width: 24px;
+   height: 24px;
+}
+
+.logout{
+  width: 24px;
+  height: 24px;
+}
+
+.register{
+  width: 24px;
+  height: 24px;
+}
+
+.carrito{
+  width: 24px;
+  height: 24px;
+
+}
 @media (max-width: 768px) {
   .header-inner {
     justify-content: center;
