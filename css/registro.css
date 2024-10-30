@@ -7,102 +7,90 @@
 small{
     display: none;
 }
+
 body{
     display: flex;
     height: 100vh;
     justify-content: center;
     align-items: center;
-    padding: 10px ;
+    padding: 10px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.container {
-    max-width: 700px;
+.needs-validation{
     width: 100%;
-    padding: 25px 30px; 
+    border-radius: 5px;
+    padding: 5px; 
+}
+
+.container {
+    max-width: 1000px;
+    width: 100%;
+    padding: 50px 1px;
     background-color: #fff;
     border-radius: 5px;
-
 }
-.container .h1 {
-    font-size: 25px;
-    font-weight: 500px;
 
+.container h1 {
+    font-size: 25px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .container form{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 10px 12px 0;
+    margin: 10px 0;
+    width: 100%;
 }
+
 form .form-group{
-
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     width: calc(100%/2 - 20px);
-
-}
-form span{
-    display: block;
-    font-weight: 500;
-    margin-bottom: 5px;
-
 }
 
-.form-group input{
-    height: 40px;
+/* Button styles */
+.d-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     width: 100%;
-    outline: none;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding-left: 15px;
-    border-bottom-width: 2px;
-    transition: all 0.3s ease;
+    margin-top: 20px;
+}
 
-}
-.form-group input:focus,
-.form-group input:valid{
-    border-color: skyblue;
-}
-form .button{
-    width: 100%;
-    height: 40px;
-    margin: 40px 0;
-
-}
-form .button input{
-    width: 100%;
-    height: 100%;
-    outline: none;
-    cursor: pointer;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #fff;
-    font-size: 16px;
-    font-weight: 500;
+.btn {
+    padding: 12px 20px;
     border: none;
     border-radius: 5px;
-
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
 }
 
-form .button input:hover{
-    background:  linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-.was-validated small{
-    display: block;
-}
-.form-group small {
-    color: red;
-    margin-top: 5px;
-    font-size: 12px;
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
 }
 
-.is-invalid {
-    border-color: red !important;
+.btn-secondary {
+    background: #6c757d;
+    color: #fff;
 }
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Rest of your existing styles... */
+
 @media(max-width: 584px){
     .container{
         max-width: 100%;
-
     }
     form .form-group{
         margin-bottom: 15px;
@@ -115,7 +103,11 @@ form .button input:hover{
     .container form::-webkit-scrollbar-button{
         width: 0;
     }
-    form .button{
-        margin: 20px 0;
+    .btn {
+        max-width: 100%;
+    }
+    .needs-validation{
+        max-width: 1000px;
+        width: 100%;
     }
 }

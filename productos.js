@@ -98,7 +98,6 @@ function displayProducts(category) {
   const container = document.getElementById('container');
   container.innerHTML = '';
 
-  
   const filteredProducts = category 
     ? products.filter(product => product.category === category)
     : products;
@@ -121,18 +120,28 @@ function displayProducts(category) {
           <h1>${product.name}</h1>
           <p>${product.description}</p>
           <div class="control">
-            <button class="btn">${product.price} Comprar ahora</button>
+            <button class="btn buy-button" data-product='${JSON.stringify(product)}'>
+              ${product.price} Comprar ahora
+            </button>
           </div>
         </div>
       </div>
     `;
     container.innerHTML += productCard;
   });
+
+ 
+  const buyButtons = container.querySelectorAll('.buy-button');
+  buyButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      const product = JSON.parse(e.target.getAttribute('data-product'));
+      addToCart(product);
+      alert(`${product.name} added to cart!`);
+    });
+  });
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
-  
   let category;
   if (window.location.pathname.includes('tcg.html')) {
     category = 'tcg';
@@ -144,5 +153,39 @@ document.addEventListener('DOMContentLoaded', () => {
     category = 'mayores';
   }
 
-  displayProducts(category); 
+  if (category || window.location.pathname.includes('index.html') ) {
+    displayProducts(category);
+  }
 });
+
+function addToCart(product) {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push(product);
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const registerButton = document.getElementById("registerButton");
+  const loginButton = document.getElementById("loginButton");
+  const logoutButton = document.getElementById("logoutButton");
+
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  if (currentUser) {
+   
+    registerButton.style.display = "none";
+    loginButton.style.display = "none";
+    logoutButton.style.display = "inline-block";
+    userNameDisplay.textContent = `Bienvenido, ${currentUser.nombre}`;
+    userNameDisplay.style.display = "inline";
+
+  }
+
+  logoutButton.addEventListener("click", () => {
+  
+    localStorage.removeItem("currentUser");
+  
+    window.location.reload();
+  });
+});
+
