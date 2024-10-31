@@ -1,5 +1,6 @@
 let products = [
   {
+    id:1,
     name: 'acana',
     price: '$49.990',
     imageUrl: '../img/acana.jpg',
@@ -9,6 +10,7 @@ let products = [
     category: 'comida',
   },
   {
+    id:2,
     name: 'origen',
     price: '$69.990 ',
     imageUrl: '../img/orijen.jpg',
@@ -17,7 +19,7 @@ let products = [
     descuento: false,
     category: 'comida',
   },
-  {
+  { id:3,
     name: 'Canil',
     price: '$39.990 ',
     imageUrl: '../img/canilPerro.jpg',
@@ -28,6 +30,7 @@ let products = [
   },
 
   {
+    id:4,
     name: 'Mochila',
     price: '$29.990 ',
     imageUrl: '../img/canilGato.jpg',
@@ -38,6 +41,7 @@ let products = [
   },
 
   {
+    id:5,
     name: 'hueso de hule',
     price: '$9.990 ',
     imageUrl: '../img/juguetePerro.png',
@@ -47,6 +51,7 @@ let products = [
     category: 'juguetes',
   },
   {
+    id:6,
     name: 'Cuerda entrenadora',
     price: '$69.990 ',
     imageUrl: '../img/cuerdas.jpg',
@@ -69,31 +74,39 @@ function displayProducts(category) {
   filteredProducts.forEach(product => {
     const productCard = `
       <div class="product-card">
-        <div class="product-image">
-          <img src="${product.imageUrl}" alt="${product.name}" />
-          <div class="new-label">Nuevo</div>
-          <div class="info">
-            <h2>${product.name}</h2>
-            <ul>
-              <li><strong>Calificación: </strong>${product.rating}</li>
-            </ul>
-          </div>
+      <a href="product.html?id=${product.id}" class="product-image">
+        <img src="${product.imageUrl}" alt="${product.name}" />
+      </a>
+    
+      <div class="product-details">
+        <h1>${product.name}</h1>
+        <p>${product.description}</p>
+           <ul>
+          <li><strong>Calificación: </strong>${product.rating}</li>
+        </ul>
+        <div class="control">
+          <button class="btn buy-button" data-product='${JSON.stringify(product)}'>
+            ${product.price} Comprar ahora
+          </button>
         </div>
-        <div class="product-details">
-          <h1>${product.name}</h1>
-          <p>${product.description}</p>
-          <div class="control">
-            <button class="btn buy-button" data-product='${JSON.stringify(product)}'>
-              ${product.price} Comprar ahora
-            </button>
-          </div>
-        </div>
+      </div>
+    </div>
+  `;
+    container.innerHTML += productCard;
+  });
+
+  filteredProducts.forEach(product => {
+    const productCard = `
+      <div class="product-card" onclick="redirectToProduct(${product.id})">
+        <!-- Your existing HTML for product display -->
       </div>
     `;
     container.innerHTML += productCard;
   });
-
- 
+  
+  function redirectToProduct(id) {
+    window.location.href = `product.html?id=${id}`;
+  }
   const buyButtons = container.querySelectorAll('.buy-button');
   buyButtons.forEach(button => {
     button.addEventListener('click', (e) => {
@@ -129,28 +142,26 @@ function renderProductEditor() {
   products.forEach((product, index) => {
     const productHTML = `
  <div class="product-card">
-    <div class="product-image">
-      <img src="${product.imageUrl}" alt="${product.name}" />
-      <div class="new-label">Nuevo</div>
+      <a href="product.html?id=${product.id}" class="product-image">
+        <img src="${product.imageUrl}" alt="${product.name}" />
+      </a>
       <div class="info">
         <h2>${product.name}</h2>
         <ul>
           <li><strong>Calificación: </strong>${product.rating}</li>
         </ul>
       </div>
-    </div>
-    <div class="product-details">
-      <h1>${product.name}</h1>
-      <p>Precio: <input type="text" value="${product.price}" id="price-${index}" /></p>
-      <p>Descripción: <textarea id="desc-${index}">${product.description}</textarea></p>
-      <div class="control">
-        <button class="btn save-button" onclick="saveProduct(${index})">
-          Guardar Cambios
-        </button>
+      <div class="product-details">
+        <h1>${product.name}</h1>
+        <p>${product.description}</p>
+        <div class="control">
+          <button class="btn buy-button" data-product='${JSON.stringify(product)}'>
+            ${product.price} Comprar ahora
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-    `;
+  `;
     container.innerHTML += productHTML;
   });
 }
@@ -170,3 +181,78 @@ document.addEventListener("DOMContentLoaded", () => {
       renderProductEditor();
   }
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const productId = new URLSearchParams(window.location.search).get('id');
+  const product = products.find(p => p.id == productId);
+
+  if (product) {
+    displayProductDetails(product);
+    loadReviews(productId);
+  }
+
+  document.getElementById("submitReview").addEventListener("click", () => {
+    const reviewText = document.getElementById("reviewText").value.trim();
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    if (currentUser && reviewText) {
+      saveReview(productId, currentUser.nombre, reviewText);
+      document.getElementById("reviewText").value = ""; 
+      loadReviews(productId);
+    } else {
+      alert("You must be logged in to leave a review.");
+    }
+  });
+});
+
+function displayProductDetails(product) {
+  const container = document.getElementById("productDetails");
+  container.innerHTML = `
+      <div class="product-card">
+          <div class="product-image">
+              <img src="${product.imageUrl}" alt="${product.name}" />
+          </div>
+          <div class="product-details">
+              <h1>${product.name}</h1>
+              <ul>
+                  <li><strong>Calificación: </strong>${product.rating}</li>
+              </ul>
+              <p>${product.description}</p>
+              <div class="control">
+                  <button class="buy-button" data-product='${JSON.stringify(product)}'>
+                      ${product.price} Comprar ahora
+                  </button>
+              </div>
+          </div>
+      </div>
+  `;
+}
+function saveReview(productId, userName, reviewText) {
+  const reviews = JSON.parse(sessionStorage.getItem("reviews")) || {};
+  if (!reviews[productId]) reviews[productId] = [];
+  
+  reviews[productId].push({
+      user: userName,
+      text: reviewText,
+      date: new Date().toLocaleString()
+  });
+  
+  sessionStorage.setItem("reviews", JSON.stringify(reviews));
+}
+
+function loadReviews(productId) {
+  const reviews = JSON.parse(sessionStorage.getItem("reviews")) || {};
+  const reviewsContainer = document.getElementById("reviewsContainer");
+  reviewsContainer.innerHTML = "";
+  
+  if (reviews[productId]) {
+      reviews[productId].forEach(review => {
+          const reviewElement = document.createElement("div");
+          reviewElement.classList.add("review");
+          reviewElement.innerHTML = `
+              <p><strong>${review.user}</strong> <span class="date">(${review.date})</span></p>
+              <p>${review.text}</p>
+          `;
+          reviewsContainer.appendChild(reviewElement);
+      });
+  }
+}

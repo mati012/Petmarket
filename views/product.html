@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    
+  </head>
+  <body>
+    <header class="header-outer">
+      <div class="header-inner responsive-wrapper">
+        <div class="header-logo">
+          <img src="../img/logo.jpg" alt="Logo" />
+        </div>
+
+        <nav class="header-navigation">
+          <a href="./index.html">Inicio</a>
+          <a href="./comida.html">Comida</a>
+          <a href="./transportadores.html">Transportadores</a>
+          <a href="./juguetes.html">Juguetes</a>
+          <a href="./registro.html" id="registerButton">
+            <img src="../img/register.png" alt="Register Icon" class="Icon" />
+        </a>
+        <a href="./login.html" id="loginButton">
+            <img src="../img/login.jpg" alt="Login Icon" class="carrito" />
+        </a>
+        
+        <span id="userNameDisplay" style="display: none; margin-left: 10px"></span>
+        <a href="./carrito.html" id="carrito"><img src="../img/carrito.png" alt="Carrito Icon" class="carrito"></a>
+        <a href="./editarUsuario.html" id="carrito"  style="display: none;" ><img src="../img/login.jpg" alt="Carrito Icon" class="carrito"></a>
+        <img src="../img/logout-button.jpg" id="logoutButton" alt="logout-button" class="carrito" style="display: none;" />
+        
+        <div id="adminOptions" style="display: none;">
+          <a href="editorProductos.html">Editar Productos</a> |
+         </div>
+
+       
+      </div>
+    </header>
+    <main>
+      <div class="product-container">
+          <div id="productDetails"></div>
+          <br>
+          <br>
+          <div class="review-section">
+              <h3>Deja tu opinión</h3>
+              <textarea id="reviewText" placeholder="Escribe tu opinión aquí"></textarea>
+              <button id="submitReview">Subir</button>
+              <div id="reviewsContainer" class="reviews-container"> </div>
+          </div>
+      </div>
+     
+  </main>
+
+    <footer>
+      <div class="footer">
+        <div id="button"></div>
+        <div id="container">
+          <div id="cont">
+            <div class="footer_center">
+              <h3>derechos reservados</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="../productos.js"></script>
+    <script src="../login.js"></script>
+
+
+  </body>
+</html>
