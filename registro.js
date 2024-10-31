@@ -1,11 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("form-validation");
-  const clearButton = document.createElement("button");
+ 
+  if (form) {  
+    const clearButton = document.createElement("button");
+    clearButton.type = "button";
+    clearButton.className = "btn btn-secondary mt-3";
+    clearButton.textContent = "Limpiar Formulario";
+    form.appendChild(clearButton);
 
-  clearButton.type = "button";
-  clearButton.className = "btn btn-secondary mt-3";
-  clearButton.textContent = "Limpiar Formulario";
-  form.appendChild(clearButton);
+  
+
 
   const validatePassword = (password) => {
     const hasNumber = /\d/.test(password);
@@ -26,14 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const validateAge = (birthDate) => {
     const today = new Date();
     const birth = new Date(birthDate);
-    const age = today.getFullYear() - birth.getFullYear();
+    let age = today.getFullYear() - birth.getFullYear();
     const monthDiff = today.getMonth() - birth.getMonth();
 
     if (
       monthDiff < 0 ||
       (monthDiff === 0 && today.getDate() < birth.getDate())
     ) {
-      age--;
+     age--;
     }
 
     return age >= 13;
@@ -155,6 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+}
 
   const inputs = form.querySelectorAll("input");
   inputs.forEach((input) => {

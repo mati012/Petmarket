@@ -1,96 +1,60 @@
 let products = [
   {
-    name: 'Catan',
+    name: 'acana',
     price: '$49.990',
-    imageUrl: '../img/catan-imagen2.jpg',
-    description: 'Es un juego de mesa de tablero modular, con cartas y dados.',
+    imageUrl: '../img/acana.jpg',
+    description: 'Comida especializada para gatos',
     rating: 4.5,
-    cantidadJ: 4,
     descuento: false,
-    category: 'familiar',
+    category: 'comida',
   },
   {
-    name: 'Dixit',
-    price: '$39.990',
-    imageUrl: '../img/dixit.jpg',
-    description: 'Juego de mesa para la familia',
-    rating: 3.5,
-    cantidadJ: 6,
-    descuento: false,
-    category: 'familiar',
-  },
-  {
-    name: 'King of Tokyo',
+    name: 'origen',
     price: '$69.990 ',
-    imageUrl: '../img/king-of-tokyo.jpg',
-    description: 'juego de mesa para la familia',
+    imageUrl: '../img/orijen.jpg',
+    description: 'comida especializada para perros',
     rating: 4,
-    cantidadJ: 6,
     descuento: false,
-    category: 'familiar',
+    category: 'comida',
   },
   {
-    name: 'Mazo Commander',
+    name: 'Canil',
     price: '$39.990 ',
-    imageUrl: '../img/mazo-commander.jpg',
-    description: 'Mazo preconstruido',
+    imageUrl: '../img/canilPerro.jpg',
+    description: 'Canil especializado para perros dimensiones medianas',
     rating: 4,
-    cantidadJ: 4,
     descuento: false,
-    category: 'tcg',
+    category: 'transportadores',
   },
 
   {
-    name: 'booster box modern horizon 3',
-    price: '$229.990 ',
-    imageUrl: '../img/booster-box.jpg',
+    name: 'Mochila',
+    price: '$29.990 ',
+    imageUrl: '../img/canilGato.jpg',
     description: 'caja de sobres de la edicion modern horizon 3',
     rating: 4,
-    cantidadJ: 4,
     descuento: false,
-    category: 'tcg',
+    category: 'transportadores',
   },
 
   {
-    name: 'Mala leche',
+    name: 'hueso de hule',
+    price: '$9.990 ',
+    imageUrl: '../img/juguetePerro.png',
+    description: 'Hueso de hule especializado para perros',
+    rating: 4,
+    descuento: false,
+    category: 'juguetes',
+  },
+  {
+    name: 'Cuerda entrenadora',
     price: '$69.990 ',
-    imageUrl: '../img/mala-leche.jpg',
-    description: 'juego de cartas para compartir con tus amigos',
+    imageUrl: '../img/cuerdas.jpg',
+    description: 'cuerda especializada para entrenar perros',
     rating: 4,
-    cantidadJ: 6,
     descuento: false,
-    category: 'nacionales',
+    category: 'juguetes',
   },
-  {
-    name: 'Ranking top 31 minutos',
-    price: '$69.990 ',
-    imageUrl: '../img/31-minutos.jpg',
-    description: 'juego de mesa para la familia',
-    rating: 4,
-    cantidadJ: 6,
-    descuento: false,
-    category: 'nacionales',
-  },
-  {
-    name: 'Exploding kittens',
-    price: '$29.990 ',
-    imageUrl: '../img/exploding-kittens-game.jpg',
-    description: 'juego de mesa para mayores',
-    rating: 4,
-    cantidadJ: 6,
-    descuento: false,
-    category: 'mayores',
-  },
-  {
-    name: 'Cards Against Humanity ',
-    price: '$19.990 ',
-    imageUrl: '../img/cards-against-humanity.jpg',
-    description: 'juego de mesa para mayores',
-    rating: 4,
-    cantidadJ: 4,
-    descuento: false,
-    category: 'mayores',
-  }
  
 ];
 
@@ -112,7 +76,6 @@ function displayProducts(category) {
             <h2>${product.name}</h2>
             <ul>
               <li><strong>Calificación: </strong>${product.rating}</li>
-              <li><strong>Cantidad de jugadores: </strong>${product.cantidadJ}</li>
             </ul>
           </div>
         </div>
@@ -136,23 +99,20 @@ function displayProducts(category) {
     button.addEventListener('click', (e) => {
       const product = JSON.parse(e.target.getAttribute('data-product'));
       addToCart(product);
-      alert(`${product.name} added to cart!`);
+      alert(`${product.name} añadido al carrito!`);
     });
   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   let category;
-  if (window.location.pathname.includes('tcg.html')) {
-    category = 'tcg';
-  } else if (window.location.pathname.includes('familiar.html')) {
-    category = 'familiar';
-  } else if (window.location.pathname.includes('nacional.html')) {
-    category = 'nacionales';
-  } else if (window.location.pathname.includes('mayores.html')) {
-    category = 'mayores';
+  if (window.location.pathname.includes('comida.html')) {
+    category = 'comida';
+  } else if (window.location.pathname.includes('transportadores.html')) {
+    category = 'transportadores';
+  } else if (window.location.pathname.includes('juguetes.html')) {
+    category = 'juguetes';
   }
-
   if (category || window.location.pathname.includes('index.html') ) {
     displayProducts(category);
   }
@@ -163,29 +123,50 @@ function addToCart(product) {
   cart.push(product);
   localStorage.setItem('cart', JSON.stringify(cart));
 }
-document.addEventListener("DOMContentLoaded", () => {
-  const registerButton = document.getElementById("registerButton");
-  const loginButton = document.getElementById("loginButton");
-  const logoutButton = document.getElementById("logoutButton");
-
-
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-  if (currentUser) {
-   
-    registerButton.style.display = "none";
-    loginButton.style.display = "none";
-    logoutButton.style.display = "inline-block";
-    userNameDisplay.textContent = `Bienvenido, ${currentUser.nombre}`;
-    userNameDisplay.style.display = "inline";
-
-  }
-
-  logoutButton.addEventListener("click", () => {
-  
-    localStorage.removeItem("currentUser");
-  
-    window.location.reload();
+function renderProductEditor() {
+  const container = document.getElementById("productEditor");
+  container.innerHTML = "";
+  products.forEach((product, index) => {
+    const productHTML = `
+ <div class="product-card">
+    <div class="product-image">
+      <img src="${product.imageUrl}" alt="${product.name}" />
+      <div class="new-label">Nuevo</div>
+      <div class="info">
+        <h2>${product.name}</h2>
+        <ul>
+          <li><strong>Calificación: </strong>${product.rating}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="product-details">
+      <h1>${product.name}</h1>
+      <p>Precio: <input type="text" value="${product.price}" id="price-${index}" /></p>
+      <p>Descripción: <textarea id="desc-${index}">${product.description}</textarea></p>
+      <div class="control">
+        <button class="btn save-button" onclick="saveProduct(${index})">
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+    `;
+    container.innerHTML += productHTML;
   });
-});
+}
 
+function saveProduct(index) {
+  const price = document.getElementById(`price-${index}`).value;
+  const description = document.getElementById(`desc-${index}`).value;
+  products[index].price = price;
+  products[index].description = description;
+  alert("Producto actualizado");
+  renderProductEditor();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const editorContainer = document.getElementById("productEditor");
+  if (editorContainer) {
+      renderProductEditor();
+  }
+});

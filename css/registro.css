@@ -14,7 +14,10 @@ body{
     justify-content: center;
     align-items: center;
     padding: 10px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: url("../img/fondo.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .needs-validation{
@@ -51,7 +54,7 @@ form .form-group{
     width: calc(100%/2 - 20px);
 }
 
-/* Button styles */
+
 .d-grid {
     display: flex;
     flex-direction: column;
@@ -86,7 +89,7 @@ form .form-group{
     opacity: 0.9;
 }
 
-/* Rest of your existing styles... */
+
 
 @media(max-width: 584px){
     .container{
