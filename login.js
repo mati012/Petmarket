@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutButton = document.getElementById("logoutButton");
   const userNameDisplay = document.getElementById("userNameDisplay");
   const adminOptions = document.getElementById("adminOptions");
-  const carritoButton = document.getElementById("carrito"); // Add the user edit button
+  const carritoButton = document.getElementById("carrito"); 
+  const editarUsuario = document.getElementById("editarUsuario")
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -12,10 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     registerButton.style.display = "none";
     loginButton.style.display = "none";
-    
+    editarUsuario.style.display= "none";    
 
     logoutButton.style.display = "inline-block";
     carritoButton.style.display = "inline-block";
+    editarUsuario.style.display= "inline-block"; 
 
    
     userNameDisplay.textContent = `Bienvenido, ${currentUser.nombre}`;
