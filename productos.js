@@ -207,20 +207,20 @@ document.addEventListener("DOMContentLoaded", () => {
 function displayProductDetails(product) {
   const container = document.getElementById("productDetails");
   container.innerHTML = `
-      <div class="product-card">
-          <div class="product-image">
+      <div class="product-foro">
+          <div class="product-image-foro">
               <img src="${product.imageUrl}" alt="${product.name}" />
           </div>
-          <div class="product-details">
+          <div class="product-details-foro">
               <h1>${product.name}</h1>
               <ul>
                   <li><strong>Calificación: </strong>${product.rating}</li>
               </ul>
               <p>${product.description}</p>
-              <div class="control">
-                  <button class="buy-button" data-product='${JSON.stringify(product)}'>
-                      ${product.price} Comprar ahora
-                  </button>
+              <div class="control-foro">
+                  <button class="btn buy-button-foro" data-product='${JSON.stringify(product)}'>
+            ${product.price} Comprar ahora
+          </button>
               </div>
           </div>
       </div>
