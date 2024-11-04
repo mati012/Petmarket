@@ -98,7 +98,6 @@ function displayProducts(category) {
   filteredProducts.forEach(product => {
     const productCard = `
       <div class="product-card" onclick="redirectToProduct(${product.id})">
-        <!-- Your existing HTML for product display -->
       </div>
     `;
     container.innerHTML += productCard;
@@ -189,70 +188,119 @@ document.addEventListener("DOMContentLoaded", () => {
     displayProductDetails(product);
     loadReviews(productId);
   }
-
-  document.getElementById("submitReview").addEventListener("click", () => {
-    const reviewText = document.getElementById("reviewText").value.trim();
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-    if (currentUser && reviewText) {
-      saveReview(productId, currentUser.nombre, reviewText);
-      document.getElementById("reviewText").value = ""; 
-      loadReviews(productId);
-    } else {
-      alert("You must be logged in to leave a review.");
+  document.addEventListener("DOMContentLoaded", () => {
+    const submitButton = document.getElementById("submitReview");
+    
+    if (submitButton) {  
+      submitButton.addEventListener("click", () => {
+        const reviewText = document.getElementById("reviewText").value.trim();
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        
+        if (!currentUser) {
+          alert("Debes iniciar sesión para poder publicar una reseña.");
+          return; 
+        }
+        
+        if (!reviewText) {
+          alert("Por favor, escribe tu reseña antes de publicarla.");
+          return;  
+        
+        }
+        saveReview(productId, currentUser.nombre, reviewText);
+        document.getElementById("reviewText").value = "";
+        loadReviews(productId);
+      });
     }
   });
 });
+function getProductIdFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('id');
+}
 
 function displayProductDetails(product) {
   const container = document.getElementById("productDetails");
   container.innerHTML = `
-      <div class="product-foro">
-          <div class="product-image-foro">
-              <img src="${product.imageUrl}" alt="${product.name}" />
-          </div>
-          <div class="product-details-foro">
-              <h1>${product.name}</h1>
-              <ul>
-                  <li><strong>Calificación: </strong>${product.rating}</li>
-              </ul>
-              <p>${product.description}</p>
-              <div class="control-foro">
-                  <button class="btn buy-button-foro" data-product='${JSON.stringify(product)}'>
+    <div class="product-foro">
+      <div class="product-image-foro">
+        <img src="${product.imageUrl}" alt="${product.name}" />
+      </div>
+      <div class="product-details-foro">
+        <h1>${product.name}</h1>
+        <ul>
+          <li><strong>Calificación: </strong>${product.rating}</li>
+        </ul>
+        <p>${product.description}</p>
+        <div class="control-foro">
+          <button class="btn buy-button-foro" data-product='${JSON.stringify(product)}'>
             ${product.price} Comprar ahora
           </button>
-              </div>
-          </div>
+        </div>
       </div>
+    </div>
   `;
+
+
+  const productId = getProductIdFromUrl();
+  if (productId) {
+    loadReviews(productId);
+  }
 }
+
 function saveReview(productId, userName, reviewText) {
-  const reviews = JSON.parse(sessionStorage.getItem("reviews")) || {};
+  const reviews = JSON.parse(localStorage.getItem("reviews")) || {};
   if (!reviews[productId]) reviews[productId] = [];
   
   reviews[productId].push({
-      user: userName,
-      text: reviewText,
-      date: new Date().toLocaleString()
+    user: userName,
+    text: reviewText,
+    date: new Date().toLocaleString()
   });
   
-  sessionStorage.setItem("reviews", JSON.stringify(reviews));
+  localStorage.setItem("reviews", JSON.stringify(reviews));
 }
 
 function loadReviews(productId) {
-  const reviews = JSON.parse(sessionStorage.getItem("reviews")) || {};
+  const reviews = JSON.parse(localStorage.getItem("reviews")) || {};
   const reviewsContainer = document.getElementById("reviewsContainer");
   reviewsContainer.innerHTML = "";
   
   if (reviews[productId]) {
-      reviews[productId].forEach(review => {
-          const reviewElement = document.createElement("div");
-          reviewElement.classList.add("review");
-          reviewElement.innerHTML = `
-              <p><strong>${review.user}</strong> <span class="date">(${review.date})</span></p>
-              <p>${review.text}</p>
-          `;
-          reviewsContainer.appendChild(reviewElement);
-      });
+    reviews[productId].forEach(review => {
+      const reviewElement = document.createElement("div");
+      reviewElement.classList.add("review");
+      reviewElement.innerHTML = `
+        <p><strong>${review.user}</strong> <span class="date">(${review.date})</span></p>
+        <p>${review.text}</p>
+      `;
+      reviewsContainer.appendChild(reviewElement);
+    });
   }
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const submitButton = document.getElementById("submitReview");
+  const productId = getProductIdFromUrl();
+  
+  if (submitButton && productId) {
+    submitButton.addEventListener("click", () => {
+      const reviewText = document.getElementById("reviewText").value.trim();
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      
+      if (!currentUser) {
+        alert("Debes iniciar sesión para poder publicar una reseña.");
+        return;
+      }
+      
+      if (!reviewText) {
+        alert("Por favor, escribe tu reseña antes de publicarla.");
+        return;
+      }
+      
+      saveReview(productId, currentUser.nombre, reviewText);
+      document.getElementById("reviewText").value = "";
+      loadReviews(productId);
+    });
+  }
+});

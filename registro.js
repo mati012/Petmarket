@@ -162,9 +162,5 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
   const inputs = form.querySelectorAll("input");
-  inputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      limpiarError(input);
-    });
-  });
+
 });
